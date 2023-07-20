@@ -2,3 +2,4 @@ sqs_handler/
 sqs_par_proc.py
 sqs_seq_proc.py
 README.md
+*__pycache__
