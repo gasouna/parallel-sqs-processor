@@ -43,5 +43,5 @@ class Queue():
     def delete_message(self, message: dict):
         return self.sqs_client.delete_message(
             QueueUrl = self.queue_url,
-            ReceiptHandle = message['Messages'][0]['ReceiptHandle']
+            ReceiptHandle = message['ReceiptHandle']
         )
