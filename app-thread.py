@@ -1,10 +1,14 @@
-from services.async_controller import AsyncController
+from services.thread_async_controller import AsyncController
 from sqs_utils.sqs_utils import Queue
 import time
+import random
+
 
 def callback_function(message):
-    print(f"Received message: {message}")
-    time.sleep(10)
+    text, delay = message.split(":")
+    print(f"Received message: {text}")
+    time.sleep(random.randint(1,int(delay)))
+    print(f"Processed message: {text}")
     return message + ' - Processed'
 
 if __name__ == "__main__":
@@ -18,4 +22,4 @@ if __name__ == "__main__":
         callback_function=callback_function
     )
 
-    async_controller.start(num_threads=5)
+    async_controller.start(num_threads=10)

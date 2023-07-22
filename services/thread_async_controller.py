@@ -9,9 +9,9 @@ class AsyncController:
         self.callback = callback_function
 
     def process_message(self, message):
-        response = self.callback(message['Messages'][0]['Body'])
+        response = self.callback(message['Body'])
 
-        message_id = random.randint(5000,6000)
+        message_id = random.randint(15000,50000)
 
         self.out_queue.post_message(
             message_body=response,
@@ -30,7 +30,7 @@ class AsyncController:
                     input_message = self.in_queue.get_message()
     
                     if "Messages" in input_message.keys():
-                        future = executor.submit(self.process_message, input_message)
+                        future = executor.submit(self.process_message, input_message['Messages'][0])
                         futures.append(future)
 
                 else:
