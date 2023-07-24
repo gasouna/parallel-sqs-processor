@@ -1,5 +1,6 @@
 from services.asyncio_async_controller import AsyncController
 from sqs_utils.sqs_utils import Queue
+import concurrent.futures as cf
 import time
 import random
 import asyncio
@@ -23,4 +24,6 @@ if __name__ == "__main__":
         callback_function=callback_function
     )
 
-    asyncio.run(async_controller.start())
+    with cf.ThreadPoolExecutor(max_workers=10) as executor:
+        for _ in range(10):
+            executor.submit(asyncio.run(async_controller.start()))
