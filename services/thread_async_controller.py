@@ -1,5 +1,6 @@
 import random
 import concurrent.futures as ct
+import traceback
 
 class AsyncController:
 
@@ -13,13 +14,14 @@ class AsyncController:
 
         message_id = random.randint(15000,50000)
 
+        # TODO: implement processing time and compare to visibility timeout
+        self.in_queue.delete_message(message)
+
         self.out_queue.post_message(
             message_body=response,
             message_group_id=str(message_id), 
             message_deduplication_id=str(message_id)
         )
-        
-        self.in_queue.delete_message(message)
 
     def start(self, num_threads):
         with ct.ThreadPoolExecutor(num_threads) as executor:
@@ -34,5 +36,12 @@ class AsyncController:
                         futures.append(future)
 
                 else:
-                    _, futures = ct.wait(futures, return_when=ct.FIRST_COMPLETED)
+                    done, futures = ct.wait(futures, return_when=ct.FIRST_COMPLETED)
                     futures = list(futures)
+
+                    for f in done:
+                        try:
+                            result = f.result()  # This will raise an exception if one occurred in the task
+                        except Exception as e:
+                            print(f'Error occurred in task: {e}')
+                            traceback.print_tb(e.__traceback__)
