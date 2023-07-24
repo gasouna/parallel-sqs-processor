@@ -9,7 +9,7 @@ import asyncio
 def callback_function(message):
     text, delay = message.split(":")
     print(f"Received message: {text}")
-    time.sleep(random.randint(1,int(delay)))
+    time.sleep(delay)
     print(f"Processed message: {text}")
     return message + ' - Processed'
 
