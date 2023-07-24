@@ -7,7 +7,7 @@ import random
 def callback_function(message):
     text, delay = message.split(":")
     print(f"Received message: {text}")
-    time.sleep(delay)
+    time.sleep(int(delay))
     print(f"Processed message: {text}")
     return message + ' - Processed'
 
