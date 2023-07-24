@@ -36,4 +36,4 @@ class AsyncController:
     async def start(self):
         while True:
             task = asyncio.create_task(self.process_message())
-            await asyncio.sleep(1)
+            await asyncio.sleep(1E-20)
