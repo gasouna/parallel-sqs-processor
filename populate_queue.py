@@ -11,6 +11,8 @@ queue_attr = {
 
 in_queue = Queue(queue_name='input_queue.fifo', queue_attr=queue_attr)
 in_queue_async = Queue(queue_name='input_queue_async.fifo', queue_attr=queue_attr)
+out_queue = Queue(queue_name='output_queue.fifo', queue_attr=queue_attr)
+out_queue_async = Queue(queue_name='output_queue_async.fifo', queue_attr=queue_attr)
 
 for message in messages:
     message_id = random.randint(1000,10000)
