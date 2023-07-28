@@ -11,7 +11,12 @@ class AsyncController:
         self.callback = callback_function
 
     async def process_message(self, message):
-        response = self.callback(message['Body'])
+        loop = asyncio.get_running_loop()
+        response = await loop.run_in_executor(
+            None,
+            self.callback,
+            message['Body']
+        )
 
         message_id = random.randint(5000,10000)
 

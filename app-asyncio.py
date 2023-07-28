@@ -13,7 +13,7 @@ queue_attr = {
 def callback_function(message):
     text, delay = message.split(":")
     print(f"Received message: {text} \n Sleeping for {delay} seconds")
-    asyncio.sleep(int(delay))
+    time.sleep(int(delay))
     print(f"Processed message: {text}")
     return message + ' - Processed'
 
